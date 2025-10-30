@@ -1,0 +1,53 @@
+
+{% block title %}Detail Series - {{ series.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ series.title }}</h1>
+<p>Status: {{ series.status }}</p>
+<p>Genres: {{ series.genre_names }}</p>
+<p>Authors: {{ series.author_names }}</p>
+<p>Chapter Count: {{ series.chapter_count }}</p>
+
+{% if series.last_chapter %}
+    <p>Last Chapter: {{ series.last_chapter.title }} (ID: {{ series.last_chapter.id }})</p>
+{% else %}
+    <p>Last Chapter: -</p>
+{% endif %}
+
+<h2>Daftar Chapter</h2>
+
+<form method="get">
+    <label>Sort:
+        <select name="order" onchange="this.form.submit()">
+            <option value="asc" {% if order == 'asc' %}selected{% endif %}>ASC</option>
+            <option value="desc" {% if order == 'desc' %}selected{% endif %}>DESC</option>
+        </select>
+    </label>
+</form>
+
+{% if chapters %}
+    <ul>
+        {% for c in chapters %}
+            <li><a href="/title/{{ series.slug }}/chapter/{{ c.chapter_number }}">Chapter {{ c.chapter_number }}: {{ c.title }} (Created at: {{ c.created_at }})</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Tidak ada chapter tersedia.</p>
+{% endif %}
+
+<h2>Series Lebih Baru</h2>
+
+{% if newerSeries %}
+    <ul>
+        {% for ns in newerSeries %}
+            <li>
+                <a href="/series/{{ ns.slug }}">{{ ns.title }}</a>
+                <small>(Created at: {{ ns.created_at }})</small>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Tidak ada series lebih baru.</p>
+{% endif %}
+
+{% endblock %}

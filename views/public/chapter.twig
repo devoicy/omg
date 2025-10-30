@@ -1,0 +1,32 @@
+
+
+{% block title %}{{ series.title }} - Chapter {{ chapter.chapter_number }}{% endblock %}
+
+{% block content %}
+<div class="chapter-header">
+  <h1>{{ series.title }}</h1>
+  <h2>Chapter {{ chapter.chapter_number }}: {{ chapter.title }}</h2>
+</div>
+
+<div class="chapter-navigation mb-4">
+  {% if prevChapter %}
+    <a href="/title/{{ series.slug }}/chapter/{{ prevChapter.chapter_number }}">← Chapter {{ prevChapter.chapter_number }}</a>
+  {% endif %}
+
+  {% if nextChapter %}
+    <a href="/title/{{ series.slug }}/chapter/{{ nextChapter.chapter_number }}" style="float:right;">Chapter {{ nextChapter.chapter_number }} →</a>
+  {% endif %}
+</div>
+
+<div class="chapter-content">
+  {% if chapter.content_path %}
+    {% include chapter.content_path ignore missing %}
+  {% else %}
+    <p>Tidak ada konten untuk chapter ini.</p>
+  {% endif %}
+</div>
+
+<div class="chapter-footer mt-4">
+  <a href="/title/{{ series.slug }}">Kembali ke seri</a>
+</div>
+{% endblock %}

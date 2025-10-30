@@ -1,0 +1,26 @@
+
+{% block title %}Daftar Series{% endblock %}
+
+{% block content %}
+<h1>Daftar Series</h1>
+
+<ul>
+    {% for s in series %}
+    <li>
+        <h2><a href="/title/{{ s.slug }}">{{ s.title }}</a></h2>
+        <p>Status: {{ s.status }}</p>
+        <p>Genres: {{ s.genre_names }}</p>
+        <p>Authors: {{ s.author_names }}</p>
+        <p>Chapter Count: {{ s.chapter_count }}</p>
+{% if s.last_chapter %}
+    <p>Last Chapter: {{ s.last_chapter.title }} (ID: {{ s.last_chapter.id }})</p>
+{% else %}
+    <p>Last Chapter: -</p>
+{% endif %}
+        <hr>
+    </li>
+    {% else %}
+    <li>Tidak ada series tersedia.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
